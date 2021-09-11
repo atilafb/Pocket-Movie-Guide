@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Pocket Movie Guide
 //
-//  Created by Stelio Bastos on 10/09/21.
+//  Created by Atila Bastos on 10/09/21.
 //
 
 import UIKit
