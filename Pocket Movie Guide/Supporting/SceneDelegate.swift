@@ -18,13 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
+        let navController = UINavigationController(rootViewController: MainVC())
+        navController.navigationBar.prefersLargeTitles = true
+        
         let safeWindow = UIWindow(windowScene: windowScene)
         safeWindow.frame = UIScreen.main.bounds
         
-        let controller = ViewController()
-        safeWindow.rootViewController = controller
-        
         self.window = safeWindow
+        safeWindow.rootViewController = navController
         safeWindow.makeKeyAndVisible()
         
     }
