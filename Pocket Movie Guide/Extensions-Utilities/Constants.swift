@@ -16,4 +16,10 @@ struct K {
         static let lightBlue = UIColor(red: 1/255, green: 180/255, blue: 228/255, alpha: 1.0)
         static let lightGreen = UIColor(red: 144/255, green: 206/255, blue: 161/255, alpha: 1.0)
     }
+    
+    struct Cells {
+        static let movieTableViewCell = "MovieTableViewCell"
+        static let movieCollectionViewCell = "MovieCollectionViewCell"
+    }
+    
 }
