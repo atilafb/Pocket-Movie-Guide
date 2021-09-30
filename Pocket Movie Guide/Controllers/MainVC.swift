@@ -27,7 +27,6 @@ class MainVC: UIViewController {
     
     func configureTableView() {
         setTableViewDelegates()
-        // Register cell
         screen.tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: K.Cells.movieTableViewCell)
     }
     

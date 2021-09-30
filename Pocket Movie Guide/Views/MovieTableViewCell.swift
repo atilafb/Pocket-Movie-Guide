@@ -10,20 +10,18 @@ import SnapKit
 
 class MovieTableViewCell: UITableViewCell {
     
-    static let identifier = "MovieTableViewCell"
-    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.scrollDirection = .horizontal
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return view
     }()
+    
     var movies: [Movie] = []
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureCollectionView()
-        setCollectionViewDelegates()
         setupView()
     }
     
@@ -31,37 +29,24 @@ class MovieTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // Similar a configure usado na CollectionViewCell
+    
+    // Similar a configure usado na MovieCollectionViewCell
     func set(with movies: [Movie]) {
         self.movies = movies
         collectionView.reloadData()
     }
     
+    
     func configureCollectionView() {
+        setCollectionViewDelegates()
         collectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: K.Cells.movieCollectionViewCell)
+        collectionView.alwaysBounceVertical = true
     }
+    
     
     func setCollectionViewDelegates() {
         collectionView.delegate = self
         collectionView.dataSource = self
-    }
-    
-}
-
-
-extension MovieTableViewCell: CodeView {
-    func buildViewHierarchy() {
-        addSubview(collectionView)
-    }
-    
-    func setupConstraints() {
-        collectionView.snp.makeConstraints { make in
-            make.top.right.bottom.left.equalToSuperview()
-        }
-    }
-    
-    func setupAdditionalConfiguration() {
-        // None additional configuration
     }
     
 }
@@ -78,8 +63,26 @@ extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 250, height: 250)
+        let height = collectionView.frame.height
+        let width = collectionView.frame.width
+        return CGSize(width: width * 0.5, height: height * 0.8)
     }
     
+}
+
+extension MovieTableViewCell: CodeView {
+    func buildViewHierarchy() {
+        addSubview(collectionView)
+    }
+    
+    func setupConstraints() {
+        collectionView.snp.makeConstraints { make in
+            make.top.right.bottom.left.equalToSuperview()
+        }
+    }
+    
+    func setupAdditionalConfiguration() {
+        // None additional configuration
+    }
     
 }
