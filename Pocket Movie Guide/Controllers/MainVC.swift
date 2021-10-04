@@ -49,6 +49,9 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.Cells.movieTableViewCell) as! MovieTableViewCell
         cell.set(with: movies)
+        
+        // Permitindo que o usuário scrolle lateralmente
+        cell.contentView.isUserInteractionEnabled = false
         return cell
     }
     
