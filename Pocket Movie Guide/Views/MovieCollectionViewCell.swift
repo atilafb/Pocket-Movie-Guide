@@ -12,28 +12,18 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     lazy var movieTitleLabel: UILabel = {
         let view = UILabel(frame: .zero)
+        view.textAlignment = .center
         return view
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .systemRed
-        contentView.addSubview(movieTitleLabel)
+        setupView()
         configureTitleLabel()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // Configurando a label dentro da CollectionViewCell
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        movieTitleLabel.frame = CGRect(x: 5,
-                                       y: contentView.frame.size.height-50,
-                                       width: contentView.frame.size.width-10,
-                                       height: 50)
     }
     
     
@@ -48,5 +38,24 @@ class MovieCollectionViewCell: UICollectionViewCell {
     public func configure(with movie: Movie) {
         self.movieTitleLabel.text = movie.title
     }
+    
+}
+
+
+extension MovieCollectionViewCell: CodeView {
+    func buildViewHierarchy() {
+        contentView.addSubview(movieTitleLabel)
+    }
+    
+    func setupConstraints() {
+        movieTitleLabel.snp.makeConstraints { make in
+            make.left.right.bottom.top.equalToSuperview().offset(5)
+        }
+    }
+    
+    func setupAdditionalConfiguration() {
+        contentView.backgroundColor = .systemRed
+    }
+    
     
 }

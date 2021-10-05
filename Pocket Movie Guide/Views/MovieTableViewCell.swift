@@ -40,7 +40,6 @@ class MovieTableViewCell: UITableViewCell {
     func configureCollectionView() {
         setCollectionViewDelegates()
         collectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: K.Cells.movieCollectionViewCell)
-        collectionView.alwaysBounceVertical = true
     }
     
     
