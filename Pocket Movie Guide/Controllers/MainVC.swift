@@ -14,19 +14,24 @@ class MainVC: UIViewController {
     
     override func loadView() {
         self.view = screen
-        navigationController?.navigationBar.largeTitleTextAttributes = K.BrandColors.titleColor
+        navigationController?.navigationBar.titleTextAttributes = K.BrandColors.titleColor
         title = "Pocket Movie Guide"
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Preenchendo o Array com os dados do dummy data. No fim da aplicação deverá ser preenchido com dados da API.
         movies = fetchData()
+        
         configureTableView()
     }
     
     
     func configureTableView() {
         setTableViewDelegates()
+        // Hardcodando a altura da tableview e comentando o ajuste dinamico da célula lá embaixo
+        screen.tableView.rowHeight = 400
         screen.tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: K.Cells.movieTableViewCell)
     }
     
@@ -38,7 +43,7 @@ class MainVC: UIViewController {
 
 extension MainVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        return 1
     }
     
     // Criando duas seções (Lançamentos e Populares)
@@ -68,22 +73,20 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     // Ajustando automaticamente a altura da célula da tableview
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
     
 }
 
 // Creating dummy data. This data is only being used to test my view. After this should be replaced by the data from the API.
 extension MainVC {
     func fetchData() -> [Movie] {
-        let movie1 = Movie(title: "Movie 1")
-        let movie2 = Movie(title: "Movie 2")
-        let movie3 = Movie(title: "Movie 3")
-        let movie4 = Movie(title: "Movie 4")
-        let movie5 = Movie(title: "Movie 5")
-        let movie6 = Movie(title: "Movie 6")
+        let movie1 = Movie(image: K.Images.fightClub!, title: "Fight Club")
+        let movie2 = Movie(image: K.Images.shangChi!, title: "Shang Chi")
+        let movie3 = Movie(image: K.Images.suicideSquad!, title: "Suicide Squad")
+        let movie4 = Movie(image: K.Images.venom!, title: "Venom")
         
-        return [movie1, movie2, movie3, movie4, movie5, movie6]
+        return [movie1, movie2, movie3, movie4]
     }
 }

@@ -22,4 +22,12 @@ struct K {
         static let movieCollectionViewCell = "MovieCollectionViewCell"
     }
     
+    struct Images {
+        static let fightClub = UIImage(named: "fightclub")
+        static let shangChi = UIImage(named: "shangchi")
+        static let suicideSquad = UIImage(named: "suicidesquad")
+        static let venom = UIImage(named: "venom")
+        static let notFound = UIImage(named: "notfound")
+    }
+    
 }

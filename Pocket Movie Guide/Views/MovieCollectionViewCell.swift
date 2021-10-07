@@ -10,11 +10,17 @@ import SnapKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
     
+    lazy var imageView: UIImageView = {
+        let view = UIImageView(frame: .zero)
+        return view
+    }()
+    
     lazy var movieTitleLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.textAlignment = .center
         return view
     }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,6 +32,11 @@ class MovieCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Configurações adicionais da ImageView para ficar melhor ajustada
+    func configureImageView() {
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+    }
     
     // Configurações adicionais da Label para ficar melhor ajustada
     func configureTitleLabel() {
@@ -36,26 +47,32 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     // Função para que seja passado um modelo de "Movie" e configurar o label desse filme e posteriormente a imagem que virá junto. (Muito importante  no momento de criar TableViews e CollectionViews de forma programática.)
     public func configure(with movie: Movie) {
+        self.imageView.image = movie.image
         self.movieTitleLabel.text = movie.title
     }
     
 }
 
-
 extension MovieCollectionViewCell: CodeView {
     func buildViewHierarchy() {
+        contentView.addSubview(imageView)
         contentView.addSubview(movieTitleLabel)
     }
     
     func setupConstraints() {
+        imageView.snp.makeConstraints { make in
+            make.left.top.right.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.6)
+        }
+        
         movieTitleLabel.snp.makeConstraints { make in
-            make.left.right.bottom.top.equalToSuperview().offset(5)
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(imageView.snp.bottom).offset(8)
         }
     }
     
     func setupAdditionalConfiguration() {
-        contentView.backgroundColor = .systemRed
+        contentView.backgroundColor = .white
     }
-    
     
 }

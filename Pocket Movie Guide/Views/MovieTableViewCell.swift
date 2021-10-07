@@ -57,14 +57,16 @@ extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.Cells.movieCollectionViewCell, for: indexPath) as! MovieCollectionViewCell
-        cell.configure(with: movies[indexPath.row])
+        let movie = movies[indexPath.row]
+        cell.configure(with: movie)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = collectionView.frame.height
+        let height = collectionView.frame.width
         let width = collectionView.frame.width
-        return CGSize(width: width * 0.5, height: height * 0.8)
+        return CGSize(width: width * 0.5,
+                      height: height * 0.8)
     }
     
 }
@@ -81,7 +83,7 @@ extension MovieTableViewCell: CodeView {
     }
     
     func setupAdditionalConfiguration() {
-        // None additional configuration
+        collectionView.backgroundColor = K.BrandColors.darkBlue
     }
     
 }
