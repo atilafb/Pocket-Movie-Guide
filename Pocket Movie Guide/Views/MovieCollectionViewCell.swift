@@ -12,11 +12,13 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     lazy var imageView: UIImageView = {
         let view = UIImageView(frame: .zero)
+        view.contentMode = .scaleToFill
         return view
     }()
     
     lazy var movieTitleLabel: UILabel = {
         let view = UILabel(frame: .zero)
+        view.backgroundColor = .lightGray
         view.textAlignment = .center
         return view
     }()
@@ -26,6 +28,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupView()
         configureTitleLabel()
+        configureImageView()
     }
     
     required init?(coder: NSCoder) {
@@ -34,7 +37,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     // Configurações adicionais da ImageView para ficar melhor ajustada
     func configureImageView() {
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = 3
         imageView.clipsToBounds = true
     }
     
@@ -42,6 +45,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
     func configureTitleLabel() {
         movieTitleLabel.numberOfLines = 0
         movieTitleLabel.adjustsFontSizeToFitWidth = true
+        movieTitleLabel.layer.cornerRadius = 5
+        movieTitleLabel.clipsToBounds = true
     }
     
     
@@ -62,17 +67,25 @@ extension MovieCollectionViewCell: CodeView {
     func setupConstraints() {
         imageView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.6)
+            make.height.equalToSuperview().multipliedBy(0.85)
         }
         
         movieTitleLabel.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom).offset(8)
+            make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview().inset(2)
+            make.top.equalTo(imageView.snp.bottom).offset(4)
         }
     }
     
     func setupAdditionalConfiguration() {
         contentView.backgroundColor = .white
+        
+        // Colocando bordas arrendondas na célula
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
+        // Masks to bounds como falso caso seja necessário alguma configuração extra. Retirar se não for necessário
+        layer.cornerRadius = 10
+        layer.masksToBounds = false
     }
     
 }

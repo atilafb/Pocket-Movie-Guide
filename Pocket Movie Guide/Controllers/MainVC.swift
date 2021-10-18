@@ -9,6 +9,7 @@ import UIKit
 
 class MainVC: UIViewController {
     
+    let searchController = UISearchController()
     let screen = MainScreenView()
     var movies: [Movie] = []
     
@@ -24,14 +25,18 @@ class MainVC: UIViewController {
         // Preenchendo o Array com os dados do dummy data. No fim da aplicação deverá ser preenchido com dados da API.
         movies = fetchData()
         
+        setupSearchBar()
         configureTableView()
     }
     
+    func setupSearchBar () {
+        navigationItem.searchController = searchController
+    }
     
     func configureTableView() {
         setTableViewDelegates()
-        // Hardcodando a altura da tableview e comentando o ajuste dinamico da célula lá embaixo
-        screen.tableView.rowHeight = 400
+        // Hardcodando a altura da TableViewCell e comentando o ajuste dinamico da célula lá embaixo
+        screen.tableView.rowHeight = 350
         screen.tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: K.Cells.movieTableViewCell)
     }
     
@@ -82,10 +87,10 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
 // Creating dummy data. This data is only being used to test my view. After this should be replaced by the data from the API.
 extension MainVC {
     func fetchData() -> [Movie] {
-        let movie1 = Movie(image: K.Images.fightClub!, title: "Fight Club")
+        let movie1 = Movie(image: K.Images.fightClub!, title: "Clube da Luta")
         let movie2 = Movie(image: K.Images.shangChi!, title: "Shang Chi")
-        let movie3 = Movie(image: K.Images.suicideSquad!, title: "Suicide Squad")
-        let movie4 = Movie(image: K.Images.venom!, title: "Venom")
+        let movie3 = Movie(image: K.Images.suicideSquad!, title: "O Esquadrão Suicida")
+        let movie4 = Movie(image: K.Images.venom!, title: "Venom: Tempo de Carnificina")
         
         return [movie1, movie2, movie3, movie4]
     }
