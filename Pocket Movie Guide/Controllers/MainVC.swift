@@ -18,18 +18,45 @@ class MainVC: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = K.BrandColors.titleColor
         title = "Pocket Movie Guide"
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Preenchendo o Array com os dados do dummy data. No fim da aplicação deverá ser preenchido com dados da API.
         movies = fetchData()
         
-        setupSearchBar()
         configureTableView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        setupSearchBar()
+    }
+    
     func setupSearchBar () {
+        // setup da navigationBar
+        if let navigationBar = self.navigationController?.navigationBar {
+            navigationBar.barTintColor = K.BrandColors.darkBlue
+        }
+        
+        // setup da searchBar
+        searchController.searchBar.backgroundColor = K.BrandColors.darkBlue
+        searchController.searchBar.tintColor = .white
+        
+        // Setup do textField da searchController.searchBar
+        if let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            
+            // searchBar.searchField placeholder
+            let placeholderString = NSAttributedString(string: "placeholder", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+            searchField.attributedPlaceholder = placeholderString
+            
+            //searchBar.searchField setup
+            searchController.searchBar.searchTextField.backgroundColor = .white
+            
+            
+        }
+        
         navigationItem.searchController = searchController
     }
     
@@ -78,9 +105,9 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     // Ajustando automaticamente a altura da célula da tableview
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
+    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        return UITableView.automaticDimension
+    //    }
     
 }
 

@@ -37,7 +37,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     // Configurações adicionais da ImageView para ficar melhor ajustada
     func configureImageView() {
-        imageView.layer.cornerRadius = 3
+        imageView.layer.cornerRadius = 4
         imageView.clipsToBounds = true
     }
     
