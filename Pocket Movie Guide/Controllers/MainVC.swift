@@ -9,8 +9,9 @@ import UIKit
 
 class MainVC: UIViewController {
     
-    let searchController = UISearchController()
     let screen = MainScreenView()
+    let searchController = UISearchController()
+    var movieManager = MovieManager()
     var movies: [Movie] = []
     
     override func loadView() {
@@ -21,7 +22,6 @@ class MainVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Preenchendo o Array com os dados do dummy data. No fim da aplicação deverá ser preenchido com dados da API.
         movies = fetchData()
         
@@ -30,11 +30,13 @@ class MainVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        
         setupSearchBar()
     }
     
     func setupSearchBar () {
+        // Chamando os delegates da searchBar na função de configurar
+        setSearchControllerDelegates()
+        
         // setup da navigationBar
         if let navigationBar = self.navigationController?.navigationBar {
             navigationBar.barTintColor = K.BrandColors.darkBlue
@@ -53,14 +55,17 @@ class MainVC: UIViewController {
             
             //searchBar.searchField setup
             searchController.searchBar.searchTextField.backgroundColor = .white
-            
-            
         }
         
         navigationItem.searchController = searchController
     }
     
+    func setSearchControllerDelegates() {
+        searchController.searchBar.delegate = self
+    }
+    
     func configureTableView() {
+        // Chamando os delegates da tableView na função de configurar
         setTableViewDelegates()
         // Hardcodando a altura da TableViewCell e comentando o ajuste dinamico da célula lá embaixo
         screen.tableView.rowHeight = 350
@@ -72,6 +77,8 @@ class MainVC: UIViewController {
         screen.tableView.dataSource = self
     }
 }
+
+//MARK: - UITableViewDelegate and DataSource
 
 extension MainVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -108,6 +115,27 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     //        return UITableView.automaticDimension
     //    }
+    
+}
+
+//MARK: - UISearchBarDelegate
+
+extension MainVC: UISearchBarDelegate {
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        if searchBar.text != "" {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if let movie = searchBar.text {
+            movieManager.getMovieByName(for: movie)
+        }
+        
+        searchBar.text = ""
+    }
     
 }
 
